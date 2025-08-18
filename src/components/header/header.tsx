@@ -1,21 +1,19 @@
 import React from "react";
 import SiteLogo from "../shared/site-logo";
 import SiteNav from "../navigations/site-navigation";
-import Link from "next/link";
 import PageContainer from "../shared/page-container";
+import ToggleDarkMode from "../shared/toggle-dark-mode";
 
 export default function Header() {
   return (
-    <header className="border-b border-gray-200">
+    <header className="border-b border-muted">
       <PageContainer className="flex flex-row items-center justify-between py-4 ">
         <SiteLogo />
         <div className="lg:flex flex-row gap-4 hidden">
           <SiteNav />
         </div>
-        <div>
-          <Link href={"/login"} className="hidden lg:block">
-            Log In
-          </Link>
+        <div className="flex flex-row items-center justify-center">
+          <ToggleDarkMode />
         </div>
       </PageContainer>
     </header>
