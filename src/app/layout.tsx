@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ReactNode } from "react";
+import { ThemeProvider } from "next-themes";
+import CustomToastContainer from "@/components/shared/custom-toast-container";
 
 export const metadata: Metadata = {
   title: {
@@ -17,7 +19,12 @@ type RootLayoutProps = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className="antialiased" suppressHydrationWarning>
-      <body>{children}</body>
+      <body>
+        <ThemeProvider defaultTheme="system" disableTransitionOnChange attribute={"class"}>
+          {children}
+          <CustomToastContainer />
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
