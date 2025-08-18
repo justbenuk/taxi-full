@@ -4,7 +4,8 @@ import { isRedirectError } from "next/dist/client/components/redirect-error";
 import z from "zod";
 import { hashSync } from "bcrypt-ts-edge";
 import { db } from "@/lib/db";
-import { signIn } from "@/auth";
+import { auth, signIn, signOut } from "@/auth";
+import { redirect } from "next/navigation";
 
 export async function registerUserAction(data: z.infer<typeof registerSchema>) {
   try {
@@ -40,4 +41,15 @@ export async function loginUserAction(data: z.Infer<typeof loginSchema>) {
     if (isRedirectError(error)) throw error;
     return { success: false, message: "Something went wrong" };
   }
+}
+
+export async function isLoggedIn() {
+  const session = await auth();
+  if (!session) {
+    return redirect("/login");
+  }
+}
+
+export async function logoutUserAction() {
+  await signOut();
 }
