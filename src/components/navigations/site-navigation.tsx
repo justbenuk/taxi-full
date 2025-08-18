@@ -9,6 +9,7 @@ export default function SiteNav() {
       <Link href={"/"}>Services</Link>
       <Link href={"/"}>Business</Link>
       <Link href={"/"}>Community</Link>
+      <Link href={"/"}>Book Now</Link>
     </nav>
   );
 }

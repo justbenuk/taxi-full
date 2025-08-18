@@ -10,8 +10,8 @@ type SiteLogoProps = {
 export default function SiteLogo({ className }: SiteLogoProps) {
   return (
     <Link href={"/"} className="flex flex-row items-center gap-2">
-      <Image src={"/assets/taxi.svg"} alt="taxi logo" height={40} width={40} />
-      <h1 className={cn("text-xl font-semibold", className)}>
+      <Image src={"/assets/taxi.svg"} alt="taxi logo" height={40} width={40} className="size-12 md:size-10" />
+      <h1 className={cn("text-xl hidden md:block", className)}>
         <span className="dark:text-yellow-300">Taxi</span> App
       </h1>
     </Link>
