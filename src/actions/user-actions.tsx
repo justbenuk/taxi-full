@@ -92,3 +92,48 @@ export async function getAllUsers() {
     return { success: true, message: "We counln't fetch the users" };
   }
 }
+
+export async function deleteUserAction(id: string) {
+  console.log(id);
+  const allowed = await isAdmin();
+  if (!allowed) return redirect("/unauthorised");
+
+  try {
+    await db.user.delete({
+      where: {
+        id,
+      },
+    });
+    return { success: true, message: "User Deleted" };
+  } catch (error) {
+    console.error(error);
+    return { success: false, message: "Something went wrong when deleting the user" };
+  }
+}
+
+export async function getCurrentUser() {
+  const session = await auth();
+  if (!session) return redirect("/login");
+
+  try {
+    const user = await db.user.findFirst({
+      where: {
+        id: session.user.id,
+      },
+      select: {
+        name: true,
+        image: true,
+        email: true,
+      },
+    });
+
+    if (!user) {
+      return { success: false, message: "No user found" };
+    }
+
+    return { success: true, user };
+  } catch (error) {
+    console.error(error);
+    return { success: false, message: "Error fetching profile" };
+  }
+}

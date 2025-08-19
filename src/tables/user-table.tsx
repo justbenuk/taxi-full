@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useReactTable, getCoreRowModel, getPaginationRowModel, createColumnHelper, flexRender, getFilteredRowModel } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from "@tabler/icons-react";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -72,8 +72,6 @@ export default function UsersTable({ users }: UsersTableProps) {
     pageSize: 10, //default page size
   });
 
-  console.log(data);
-
   const table = useReactTable({
     data,
     columns,
@@ -91,6 +89,10 @@ export default function UsersTable({ users }: UsersTableProps) {
 
   return (
     <Card>
+      <CardHeader>
+        <CardTitle>All Users</CardTitle>
+        <CardDescription className="text-xs">Manage all active users</CardDescription>
+      </CardHeader>
       <CardContent className="overflow-x-auto">
         <TableFilter table={table} />
         <Table className="border">
@@ -107,7 +109,7 @@ export default function UsersTable({ users }: UsersTableProps) {
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id} className="border-b hover:bg-gray-50">
+              <TableRow key={row.id} className="border-b">
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id} className="px-4 py-2">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "next-themes";
 
+
 export default function ToggleDarkMode() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();

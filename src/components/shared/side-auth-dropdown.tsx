@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IconDotsVertical, IconUserCircle } from "@tabler/icons-react";
 import LogoutForm from "@/forms/logout-form";
 import { Session } from "next-auth"; // Import the Session type
+import Link from "next/link";
 
 type UserProps = {
   user: Session["user"];
@@ -45,9 +46,11 @@ export default function SideAuthDropdown({ user }: UserProps) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <IconUserCircle />
-                Profile
+              <DropdownMenuItem asChild>
+                <Link href={"/profile"}>
+                  <IconUserCircle />
+                  Profile
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
