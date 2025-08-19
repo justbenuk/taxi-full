@@ -20,7 +20,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className="antialiased" suppressHydrationWarning>
       <body>
-        <ThemeProvider defaultTheme="system" disableTransitionOnChange attribute={"class"}>
+        <ThemeProvider defaultTheme="light" disableTransitionOnChange attribute={"class"}>
           {children}
           <CustomToastContainer />
         </ThemeProvider>

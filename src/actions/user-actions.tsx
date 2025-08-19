@@ -18,6 +18,9 @@ export async function registerUserAction(data: z.infer<typeof registerSchema>) {
         name: validated.name,
         email: validated.email,
         password: hashedPassword,
+        groups: {
+          create: [{ group: "NONE" }],
+        },
       },
     });
 
@@ -28,6 +31,7 @@ export async function registerUserAction(data: z.infer<typeof registerSchema>) {
     return { success: true, message: "You have logged in" };
   } catch (error) {
     if (isRedirectError(error)) throw error;
+    console.log(error);
     return { success: false, message: "Something went wrong" };
   }
 }
@@ -52,4 +56,39 @@ export async function isLoggedIn() {
 
 export async function logoutUserAction() {
   await signOut();
+}
+
+export async function isAdmin() {
+  const session = await auth();
+  if (!session) {
+    return redirect("/login");
+  }
+
+  if (session.user.role !== "admin") {
+    return redirect("/unauthorised");
+  }
+  return session.user;
+}
+
+export async function getAllUsers() {
+  try {
+    const users = await db.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        image: true,
+        groups: {
+          select: {
+            group: true,
+          },
+        },
+      },
+    });
+    return { success: true, users };
+  } catch (error) {
+    console.error(error);
+    return { success: true, message: "We counln't fetch the users" };
+  }
 }

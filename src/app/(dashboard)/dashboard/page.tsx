@@ -1,9 +1,9 @@
 import React from "react";
 
+export const metadata = {
+  title: "Dashboard",
+};
+
 export default function DashboardPage() {
-  return (
-    <div>
-      <p>this is the dashboard page</p>
-    </div>
-  );
+  return <div></div>;
 }

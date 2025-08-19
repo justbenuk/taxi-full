@@ -28,6 +28,9 @@ export const config = {
           where: {
             email: credentials.email as string,
           },
+          include: {
+            groups: true
+          }
         });
 
         //check if the users exits and password matches
@@ -40,7 +43,8 @@ export const config = {
             name: user.name,
             email: user.email,
             role: user.role,
-            image: user.image
+            image: user.image,
+            groups: user.groups
           };
         }
         //if above fails
@@ -55,7 +59,8 @@ export const config = {
       session.user.id = token.sub;
       session.user.role = token.role;
       session.user.name = token.name;
-     session.user.image = token.image
+      session.user.image = token.image
+      session.user.groups = token.groups
       return session;
     },
     // eslint-disable-next-line
@@ -66,6 +71,7 @@ export const config = {
         token.id = user.id;
         token.role = user.role as string;
         token.image = user.image as string
+        token.groups = user.groups
       }
 
     

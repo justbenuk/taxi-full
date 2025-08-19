@@ -1,6 +1,5 @@
 import React from "react";
 import { SidebarTrigger } from "../ui/sidebar";
-import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import ToggleDarkMode from "../shared/toggle-dark-mode";
 

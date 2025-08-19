@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "public"."Group" AS ENUM ('NONE', 'PA', 'STAFF', 'ADMIN');
+
 -- CreateTable
 CREATE TABLE "public"."accounts" (
     "id" TEXT NOT NULL,
@@ -32,10 +35,20 @@ CREATE TABLE "public"."users" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "role" TEXT NOT NULL DEFAULT 'user',
     "email_verified" TIMESTAMP(3),
     "image" TEXT,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."UserGroup" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "group" "public"."Group" NOT NULL,
+
+    CONSTRAINT "UserGroup_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -55,6 +68,9 @@ CREATE UNIQUE INDEX "sessions_session_token_key" ON "public"."sessions"("session
 CREATE UNIQUE INDEX "users_email_key" ON "public"."users"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "UserGroup_userId_group_key" ON "public"."UserGroup"("userId", "group");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "verification_tokens_identifier_token_key" ON "public"."verification_tokens"("identifier", "token");
 
 -- AddForeignKey
@@ -62,3 +78,6 @@ ALTER TABLE "public"."accounts" ADD CONSTRAINT "accounts_user_id_fkey" FOREIGN K
 
 -- AddForeignKey
 ALTER TABLE "public"."sessions" ADD CONSTRAINT "sessions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."UserGroup" ADD CONSTRAINT "UserGroup_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
