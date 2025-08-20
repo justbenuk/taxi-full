@@ -10,9 +10,6 @@ type User = {
   name: string;
   email: string;
   role: string;
-  groups: {
-    group: string;
-  }[];
   image?: string | null;
 };
 

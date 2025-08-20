@@ -9,15 +9,18 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import TableFilter from "@/components/tables/table-filter";
 import TableActions from "@/components/tables/table-actions";
+import Image from "next/image";
 
 type User = {
   id: string;
   name: string;
   email: string;
   role: string;
-  groups: {
-    group: string;
-  }[];
+  dob: string;
+  nin: string;
+  contactNumber: string;
+  gender: string;
+  position: string;
   image?: string | null;
 };
 
@@ -41,6 +44,10 @@ export type PaginationInitialTableState = {
 const columnHelper = createColumnHelper<User>();
 
 const columns = [
+  columnHelper.accessor("image", {
+    header: "Image",
+    cell: (info) => <Image src={info.getValue() || "/assets/profile.jpg"} alt="profile picture" height={30} width={30} className="rounded-full size-8" />,
+  }),
   columnHelper.accessor("name", {
     header: "Name",
     cell: (info) => info.getValue(),
@@ -49,10 +56,27 @@ const columns = [
     header: "Email",
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor("groups", {
-    header: "Assigned Groups",
-    cell: (info) => info.getValue().map((g) => g.group),
+  columnHelper.accessor("contactNumber", {
+    header: "ContactNumber",
+    cell: (info) => info.getValue(),
   }),
+  columnHelper.accessor("dob", {
+    header: "Date of Birth",
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor("position", {
+    header: "Position",
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor("nin", {
+    header: "NI Number",
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor("gender", {
+    header: "Gender",
+    cell: (info) => info.getValue(),
+  }),
+
   columnHelper.accessor("role", {
     header: "Role",
     cell: (info) => info.getValue(),

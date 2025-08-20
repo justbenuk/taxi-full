@@ -79,11 +79,11 @@ export async function getAllUsers() {
         email: true,
         role: true,
         image: true,
-        groups: {
-          select: {
-            group: true,
-          },
-        },
+        contactNumber: true,
+        nin: true,
+        dob: true,
+        position: true,
+        gender: true,
       },
     });
     return { success: true, users };
@@ -111,7 +111,7 @@ export async function deleteUserAction(id: string) {
   }
 }
 
-export async function getCurrentUser() {
+export async function getUserProfile() {
   const session = await auth();
   if (!session) return redirect("/login");
 
@@ -124,6 +124,12 @@ export async function getCurrentUser() {
         name: true,
         image: true,
         email: true,
+        contactNumber: true,
+        nin: true,
+        dob: true,
+        position: true,
+        gender: true,
+        role: true,
       },
     });
 

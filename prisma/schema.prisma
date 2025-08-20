@@ -44,12 +44,23 @@ enum Group {
   ADMIN
 }
 
+enum Gender {
+  Male
+  Female
+  NonBinary
+}
+
 model User {
   id            String      @id @default(cuid())
   name          String
   email         String      @unique
   password      String
   role          String      @default("user")
+  contactNumber String?     @default("")
+  nin           String?     @default("")
+  dob           String?     @default("")
+  position      String?     @default("")
+  gender        Gender?
   emailVerified DateTime?   @map("email_verified")
   image         String?
   groups        UserGroup[]
