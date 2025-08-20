@@ -16,11 +16,11 @@ type User = {
   name: string;
   email: string;
   role: string;
-  dob: string;
-  nin: string;
-  contactNumber: string;
-  gender: string;
-  position: string;
+  dob?: string | null;
+  nin?: string | null;
+  contactNumber?: string | null;
+  gender?: string | null;
+  position?: string | null;
   image?: string | null;
 };
 
