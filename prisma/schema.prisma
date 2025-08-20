@@ -63,6 +63,7 @@ model User {
   gender        Gender?
   emailVerified DateTime?   @map("email_verified")
   image         String?
+  imageKey      String?
   groups        UserGroup[]
   accounts      Account[]
   sessions      Session[]
