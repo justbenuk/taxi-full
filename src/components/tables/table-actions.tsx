@@ -10,9 +10,7 @@ type User = {
   name: string;
   email: string;
   role: string;
-  image?: {
-    url: string;
-  }[];
+  image?: string | null;
 };
 
 type TableActionsProps = {

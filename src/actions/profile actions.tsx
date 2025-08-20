@@ -5,8 +5,9 @@ import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { UTApi } from "uploadthing/server";
+import { UploadedFileData } from "uploadthing/types";
 
-export async function updateProfilePicture(data: any) {
+export async function updateProfilePicture(data: UploadedFileData) {
   const session = await auth();
   if (!session) return redirect("Unauthorised");
   try {

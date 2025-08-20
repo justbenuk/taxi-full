@@ -1,4 +1,3 @@
-import { isLoggedIn } from "@/actions/user-actions";
 import { auth } from "@/auth";
 import SiteLogo from "@/components/shared/site-logo";
 import Image from "next/image";

@@ -21,9 +21,7 @@ type User = {
   contactNumber?: string | null;
   gender?: string | null;
   position?: string | null;
-  image: {
-    url: string;
-  }[];
+  image?: string | null;
 };
 
 type UsersTableProps = {
@@ -48,7 +46,7 @@ const columnHelper = createColumnHelper<User>();
 const columns = [
   columnHelper.accessor("image", {
     header: "Image",
-    cell: (info) => <Image src={info.getValue()?.[0]?.url || "/assets/profile.jpg"} alt="profile picture" height={30} width={30} className="rounded-full size-8" />,
+    cell: (info) => <Image src={info.getValue() || "/assets/profile.jpg"} alt="profile picture" height={30} width={30} className="rounded-full size-8" />,
   }),
   columnHelper.accessor("name", {
     header: "Name",

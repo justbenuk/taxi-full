@@ -1,7 +1,6 @@
 import { auth } from '@/auth'
-import { db } from '@/lib/db'
 import { createUploadthing, type FileRouter } from 'uploadthing/next'
-import { UploadThingError, UTApi } from 'uploadthing/server'
+import { UploadThingError} from 'uploadthing/server'
 
 const f = createUploadthing()
 
@@ -19,8 +18,7 @@ export const ourFileRouter = {
       if (!session) throw new UploadThingError("Unauthorised")
       return {userId: session.user.id}
     })
-    .onUploadComplete(async ({ metadata, file }) => {
-     
+    .onUploadComplete(async ({ metadata }) => {
     return {uploadedBy: metadata.userId}
   })
 } satisfies FileRouter
