@@ -130,6 +130,14 @@ export async function getUserProfile() {
         position: true,
         gender: true,
         role: true,
+        emergencyContacts: {
+          select: {
+            name: true,
+            contactNumber: true,
+            relationship: true,
+            isPrimary: true,
+          },
+        },
       },
     });
 

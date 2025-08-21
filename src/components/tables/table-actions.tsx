@@ -4,17 +4,10 @@ import Link from "next/link";
 import { IconEye } from "@tabler/icons-react";
 import { Row } from "@tanstack/react-table";
 import DeleteUserForm from "@/forms/delete-user-form";
-
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  image?: string | null;
-};
+import { UserProps } from "@/types";
 
 type TableActionsProps = {
-  row: Row<User>;
+  row: Row<UserProps>;
 };
 
 export default function TableActions({ row }: TableActionsProps) {

@@ -1,70 +1,32 @@
 import { getUserProfile } from "@/actions/user-actions";
+import EmergencyContactList from "@/components/profile/emergency-contact-list";
+import PersonalInfoCard from "@/components/profile/personal-info-card";
 import AdminSectionTitle from "@/components/shared/admin-section-title";
+import LoggedInError from "@/components/shared/logged-in-error";
 import PageContainer from "@/components/shared/page-container";
-import { Card, CardContent } from "@/components/ui/card";
-import ProfilePictureUpload from "@/components/uploads/profile-picture-upload";
-import Image from "next/image";
-import React from "react";
-import { toast } from "react-toastify";
+import AddEmergencyContactForm from "@/forms/add-emergency-contact";
 
 export const metadata = {
   title: "Your Profile",
 };
 export default async function ProfilePage() {
-  const { success, message, user } = await getUserProfile();
+  const { success, user } = await getUserProfile();
   if (!success || !user) {
-    toast.error(message);
-    return (
-      <div className="mt-10">
-        <p>You must be logged in the view this page</p>
-      </div>
-    );
+    return <LoggedInError />;
   }
 
   return (
-    <PageContainer className="mt-10">
+    <PageContainer className="mt-10 space-y-10">
       <div>
         <AdminSectionTitle title="Personal Information" description="Everything we need to know about you" />
-        <Card>
-          <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:gap-10">
-            <div className="col-span-1">
-              <Image src={user.image || "/assets/profile.jpg"} alt="profile pic" height={200} width={500} className="lg:h-[200px] w-[200px] mx-auto md:h-full rounded-full" />
-              <ProfilePictureUpload />
-            </div>
-            <div className="lg:col-span-3 lg:p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-6 md:pt-0 gap-2 md:gap-6">
-                <div className="flex flex-col space-y-2">
-                  <span className="font-semibold text-muted-foreground">Name</span>
-                  <span>{user.name}</span>
-                </div>
-                <div className="flex flex-col space-y-2">
-                  <span className="font-semibold text-muted-foreground">Email Address</span>
-                  <span>{user.email}</span>
-                </div>
-                <div className="flex flex-col space-y-2">
-                  <span className="font-semibold text-muted-foreground">Contact Number</span>
-                  <span>{user.contactNumber}</span>
-                </div>
-                <div className="flex flex-col space-y-2">
-                  <span className="font-semibold text-muted-foreground">Date Of Birth</span>
-                  <span>{user.dob}</span>
-                </div>
-                <div className="flex flex-col space-y-2">
-                  <span className="font-semibold text-muted-foreground">National Insurance Number</span>
-                  <span>{user.nin}</span>
-                </div>
-                <div className="flex flex-col space-y-2">
-                  <span className="font-semibold text-muted-foreground">Gender</span>
-                  <span>{user.gender}</span>
-                </div>
-                <div className="flex flex-col space-y-2">
-                  <span className="font-semibold text-muted-foreground">Role</span>
-                  <span>{user.role}</span>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <PersonalInfoCard user={user} />
+      </div>
+      <div>
+        <div className="flex flex-row items-center justify-between">
+          <AdminSectionTitle title="Emergency Contacts" description="Incase of an emergency, who do we call" />
+          <AddEmergencyContactForm />
+        </div>
+        <EmergencyContactList contacts={user.emergencyContacts} />
       </div>
     </PageContainer>
   );

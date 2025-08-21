@@ -51,22 +51,23 @@ enum Gender {
 }
 
 model User {
-  id            String      @id @default(cuid())
-  name          String
-  email         String      @unique
-  password      String
-  role          String      @default("user")
-  contactNumber String?     @default("")
-  nin           String?     @default("")
-  dob           String?     @default("")
-  position      String?     @default("")
-  gender        Gender?
-  emailVerified DateTime?   @map("email_verified")
-  image         String?
-  imageKey      String?
-  groups        UserGroup[]
-  accounts      Account[]
-  sessions      Session[]
+  id                String             @id @default(cuid())
+  name              String
+  email             String             @unique
+  password          String
+  role              String             @default("user")
+  contactNumber     String?            @default("")
+  nin               String?            @default("")
+  dob               String?            @default("")
+  position          String?            @default("")
+  gender            Gender?
+  emailVerified     DateTime?          @map("email_verified")
+  image             String?
+  imageKey          String?
+  groups            UserGroup[]
+  accounts          Account[]
+  sessions          Session[]
+  emergencyContacts EmergencyContact[]
 
   @@map("users")
 }
@@ -79,6 +80,16 @@ model UserGroup {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, group]) // prevent duplicates
+}
+
+model EmergencyContact {
+  id            String  @id @default(cuid())
+  name          String
+  contactNumber String
+  relationship  String
+  isPrimary     Boolean @default(false)
+  User          User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String?
 }
 
 model VerificationToken {

@@ -10,38 +10,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import TableFilter from "@/components/tables/table-filter";
 import TableActions from "@/components/tables/table-actions";
 import Image from "next/image";
+import { UserProps, UsersTableProps } from "@/types";
 
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  dob?: string | null;
-  nin?: string | null;
-  contactNumber?: string | null;
-  gender?: string | null;
-  position?: string | null;
-  image?: string | null;
-};
-
-type UsersTableProps = {
-  users: User[];
-};
-
-export type PaginationState = {
-  pageIndex: number;
-  pageSize: number;
-};
-
-export type PaginationTableState = {
-  pagination: PaginationState;
-};
-
-export type PaginationInitialTableState = {
-  pagination?: Partial<PaginationState>;
-};
-
-const columnHelper = createColumnHelper<User>();
+const columnHelper = createColumnHelper<UserProps>();
 
 const columns = [
   columnHelper.accessor("image", {
@@ -110,8 +81,6 @@ export default function UsersTable({ users }: UsersTableProps) {
       globalFilter,
     },
   });
-
-  console.log(users);
 
   return (
     <Card>

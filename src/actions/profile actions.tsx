@@ -2,6 +2,8 @@
 
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { EmergencyContactProps } from "@/types";
+import { CreateEmergencyContactSchema } from "@/validators/profile-Validators";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { UTApi } from "uploadthing/server";
@@ -37,5 +39,30 @@ export async function updateProfilePicture(data: UploadedFileData) {
   } catch (error) {
     console.error(error);
     return { success: false, message: "Error uploading your image" };
+  }
+}
+
+export async function CreateEmergencyContactAction(data: EmergencyContactProps) {
+  const session = await auth();
+  if (!session) return redirect("/");
+  console.log(data);
+
+  try {
+    const validated = CreateEmergencyContactSchema.parse(data);
+
+    await db.emergencyContact.create({
+      data: {
+        name: validated.name,
+        contactNumber: validated.contactNumber,
+        relationship: validated.relationship,
+        isPrimary: validated.isPrimary,
+        userId: session.user.id,
+      },
+    });
+    revalidatePath("/profile");
+    return { success: true, message: "Contact Added" };
+  } catch (error) {
+    console.error(error);
+    return { success: false, message: "Something went wrong" };
   }
 }
